@@ -1,0 +1,23 @@
+<form id="contact-form" data-contact-form data-recipient="spcf.ictdu@spcf.edu.ph" action="mailto:spcf.ictdu@spcf.edu.ph" method="post" enctype="text/plain">
+                <p class="form-intro">Complete the form to prepare an email. Review and send the draft in your email app, or <a href="mailto:spcf.ictdu@spcf.edu.ph">email us directly</a>.</p>
+                <div class="row g-3">
+                  <div class="col-md-6"><div class="form-floating">
+                    <input type="text" class="form-control" id="contact-name" name="name" placeholder="Your name" autocomplete="name" maxlength="100" required>
+                    <label for="contact-name">Your name</label>
+                  </div></div>
+                  <div class="col-md-6"><div class="form-floating">
+                    <input type="email" class="form-control" id="contact-email" name="email" placeholder="you@example.com" autocomplete="email" spellcheck="false" maxlength="254" required>
+                    <label for="contact-email">Your email</label>
+                  </div></div>
+                  <div class="col-12"><div class="form-floating">
+                    <input type="text" class="form-control" id="contact-subject" name="subject" placeholder="Project or membership inquiry" maxlength="160" required>
+                    <label for="contact-subject">Subject</label>
+                  </div></div>
+                  <div class="col-12"><div class="form-floating">
+                    <textarea class="form-control contact-message" id="contact-message" name="message" placeholder="Tell us how we can help" maxlength="5000" required></textarea>
+                    <label for="contact-message">Message</label>
+                  </div></div>
+                  <div class="col-12"><button class="btn btn-primary w-100 py-3" type="submit">Prepare email</button></div>
+                  <div class="col-12"><p class="form-status mb-2" data-form-status role="status" aria-live="polite"></p><a class="btn btn-outline-primary" data-email-draft hidden>Open email draft</a></div>
+                </div>
+              </form>

@@ -1,23 +1,41 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const scrollWheel = document.querySelector(".scroll-wheel");
-    const items = document.querySelectorAll(".scroll-item");
-  
-    let totalHeight = 0;
-    items.forEach(item => {
-      totalHeight += item.offsetHeight;
-    });
-  
-    scrollWheel.style.height = `${totalHeight}px`;
-  });
+(function () {
+    'use strict';
 
-  var map = L.map('map').setView([51.505, -0.09], 13);
+    function initializeMap() {
+        var mapEl = document.getElementById('map');
+        if (!mapEl) return;
+        var coordinates = [15.158559272278623, 120.59243595927532];
+        var leaflet = window.L;
 
-  // Add a tile layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+        function showMapFallback() {
+            mapEl.textContent = '';
+            var message = document.createElement('p');
+            message.className = 'map-fallback';
+            message.textContent = 'The interactive map is unavailable. ';
+            var link = document.createElement('a');
+            link.href = 'https://www.openstreetmap.org/?mlat=' + coordinates[0] + '&mlon=' + coordinates[1] + '#map=16/' + coordinates[0] + '/' + coordinates[1];
+            link.textContent = 'View the ICTDU location on OpenStreetMap';
+            message.appendChild(link);
+            mapEl.appendChild(message);
+        }
 
-  // Add a marker
-  var marker = L.marker([15.158559272278623, 120.59243595927532]).addTo(map)
-      .bindPopup('ICTDU.')
-      .openPopup();
+        if (!leaflet || typeof leaflet.map !== 'function') {
+            showMapFallback();
+            return;
+        }
+        try {
+            var map = leaflet.map(mapEl, { scrollWheelZoom: false }).setView(coordinates, 16);
+            leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            leaflet.marker(coordinates).addTo(map).bindPopup('ICTDU').openPopup();
+        } catch (error) {
+            showMapFallback();
+        }
+    }
+
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeMap, { once: true });
+        else initializeMap();
+    }
+}());
